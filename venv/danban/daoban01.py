@@ -4,6 +4,7 @@
 # @FILE   : daoban01.py
 
 import requests
+from bs4 import BeautifulSoup
 
 def html(url):
   #url = "https://chenwenb.com/new"
@@ -28,4 +29,31 @@ def html(url):
 
   response = requests.request("GET", url, headers=headers, data=payload)
   response.encoding='utf-8'
-  return response.text
+  #return response.text
+
+  soup = BeautifulSoup(response.text,'lxml')
+
+  return soup
+
+
+
+if __name__ == '__main__':
+    num = 10
+    url = f"https://chenwenb.com/newpage/{num}"
+    soup = html(url)
+
+    # 获取视频分类
+    class3 = soup.find_all(class_='cat')
+
+    class1  =  soup.find(id = 'posts')
+
+    class1 = class1.find_all('h3')
+    for i in range(len(class1)):
+      class2 = class1[i].find('a')
+      print(class2.string)
+      print(class2['href'])
+      class4 = class3[i].string
+      print(class4)
+
+
+
