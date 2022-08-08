@@ -5,6 +5,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+import writetocsv
 
 def html(url):
   #url = "https://chenwenb.com/new"
@@ -49,11 +50,21 @@ if __name__ == '__main__':
 
     class1 = class1.find_all('h3')
     for i in range(len(class1)):
+      list = []
       class2 = class1[i].find('a')
-      print(class2.string)
-      print(class2['href'])
-      class4 = class3[i].string
-      print(class4)
+      #print(class2.string) #输出教程名
+      name = class2.string
+
+      #print(class2['href']) #输入教程链接
+      class_url = class2['href']
+
+      class4 = class3[i].string #输出教程分类
+      #print(class4)
+
+      list.append(name,class_url,class4)
+      print(list)
+
+
 
 
 
