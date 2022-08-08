@@ -39,7 +39,7 @@ def html(url):
 
 if __name__ == '__main__':
     num = 10
-    url = f"https://chenwenb.com/newpage/{num}"
+    url = f"https://chenwenb.com/new/page/{num}"
     soup = html(url)
 
     # 获取视频分类
