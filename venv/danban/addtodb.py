@@ -33,32 +33,35 @@ def create_table(con,name,sql):
         print("Create table failed")
         return False
     con.commit()
-    con.close()
-    print(表格创建成功)
-def sql_insert(con, num):
-    num = int(num)
-    t2 = time.strftime("%Y-%m-%d %X", time.localtime())
+    #con.close()
+    print('表格创建成功')
+def sql_insert(con,name,value):
+    #num = int(num)
+    #t2 = time.strftime("%Y-%m-%d %X", time.localtime())
     cursorObj = con.cursor()
-    num1 = (num,t2,)
+    #num1 = (num,)
     cursorObj.execute(
-        'INSERT INTO employees(phone,time) VALUES(?,?)', num1)
+        f'INSERT INTO {name} VALUES{value}')
 
     con.commit()
-    print(f'===============================插入=={num}==手机号成功')
-def sql_fetch(con,num):
-    num = int(num)
+    print('数据插入成功！！！')
+    #print(f'===============================插入=={num}==手机号成功')
+
+
+def sql_fetch(con,name,top,value):
+    #num = int(num)
     cursorObj = con.cursor()
-    num1 = (num,)
-    cursorObj.execute('SELECT *  FROM employees WHERE phone = ?',num1)
+    value = (value,)
+    cursorObj.execute(f'SELECT *  FROM {name} WHERE {top} = ?',value)
 
     rows = cursorObj.fetchall()
 
     if rows == []:
-        print('---------------------手机号未注册了')
-        return 1
+        print('---------------------教程未入库')
+        return True
     else:
-        print('----------------------------------------手机号已注册')
-        return 0
+        print('----------------------------------------教程已入库')
+        return False
 
 
 def sql_del(con,num):
@@ -91,7 +94,13 @@ def midsql_table(con):
 
 if __name__ == '__main__':
     con = sql_connection('class')
-    t = '(NAME TEXT,URL TEXT,CLASS,TEXT)'
+    t = ('NAME TEXT','URL TEXT','CLASS TEXT')
     #t = '(name text, salary real, department text)'
     name = 'classname'
     create_table(con,name,t)
+    value = ('123','1223','1223')
+    print(value[0])
+    top = 'NAME'
+    if sql_fetch(con,name,top,value[0]):
+        sql_insert(con,name,value)
+        pass

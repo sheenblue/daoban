@@ -41,38 +41,49 @@ def html(url):
 
 
 if __name__ == '__main__':
-    t = 'NAME TEXT,URL TEXT,CLASS,TEXT'
-
+    con = addtodb.sql_connection('class')
+    t = ('NAME TEXT','URL TEXT','CLASS TEXT')
+    name1 = 'classname'
+    addtodb.create_table(con, 1, t)
+    top = 'NAME'
 
     list = ['教程名', '教程链接', '教程分类']
 
 
-    writetocsv.creatcsv('网课', list)
-    num = 4
-    url = f"https://chenwenb.com/new/page/{num}"
-    soup = html(url)
+    #writetocsv.creatcsv('网课', list)
+    for num in range(44):
 
-    # 获取视频分类
-    class3 = soup.find_all(class_='cat')
+        url = f"https://chenwenb.com/new/page/{num+1}"
+        soup = html(url)
 
-    class1  =  soup.find(id = 'posts')
+        # 获取视频分类
+        class3 = soup.find_all(class_='cat')
 
-    class1 = class1.find_all('h3')
-    for i in range(len(class1)):
+        class1  =  soup.find(id = 'posts')
 
-      class2 = class1[i].find('a')
-      #print(class2.string) #输出教程名
-      name = class2.string
+        class1 = class1.find_all('h3')
+        for i in range(len(class1)):
 
-      #print(class2['href']) #输入教程链接
-      class_url = class2['href']
+          class2 = class1[i].find('a')
+          #print(class2.string) #输出教程名
+          name = class2.string
 
-      class4 = class3[i].string #输出教程分类
-      #print(class4)
+          #print(class2['href']) #输入教程链接
+          class_url = class2['href']
 
-      list2 = {"教程名":name,"教程链接":class_url,"教程分类":class4}
+          class4 = class3[i].string #输出教程分类
+          #print(class4)
 
-      writetocsv.xieru('网课',list2,list)
+          #list2 = {"教程名":name,"教程链接":class_url,"教程分类":class4}
+
+
+
+          value = (name, class_url, class4)
+
+          if addtodb.sql_fetch(con, name1, top, value[0]):
+              addtodb.sql_insert(con, name1, value)
+              #writetocsv.xieru('网课', list2, list)
+              pass
 
 
 
