@@ -42,16 +42,16 @@ def html(url):
 
 if __name__ == '__main__':
     con = addtodb.sql_connection('class')
-    t = ('NAME TEXT','URL TEXT','CLASS TEXT')
+    t = '(NAME TEXT,URL TEXT,CLASS TEXT)'
     name1 = 'classname'
-    addtodb.create_table(con, 1, t)
+    addtodb.create_table(con, name1, t)
     top = 'NAME'
 
     list = ['教程名', '教程链接', '教程分类']
 
 
     #writetocsv.creatcsv('网课', list)
-    for num in range(44):
+    for num in range(1):
 
         url = f"https://chenwenb.com/new/page/{num+1}"
         soup = html(url)
