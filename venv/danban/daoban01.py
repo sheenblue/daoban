@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import writetocsv
 import os
+import addtodb
 
 def html(url):
   #url = "https://chenwenb.com/new"
@@ -40,6 +41,9 @@ def html(url):
 
 
 if __name__ == '__main__':
+    t = 'NAME TEXT,URL TEXT,CLASS,TEXT'
+
+
     list = ['教程名', '教程链接', '教程分类']
 
 
