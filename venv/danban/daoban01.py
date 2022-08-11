@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
 
     #writetocsv.creatcsv('网课', list)
-    for num in range(44):
+    for num in range(1):
 
         url = f"https://chenwenb.com/new/page/{num+1}"
         soup = html(url)
